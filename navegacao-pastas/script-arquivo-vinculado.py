@@ -67,7 +67,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
                     #ORIGEM
 
             try:
-                os.rename(dirpath.replace("\\", "/") + "/" + name, '/home/suas/Arquivo-digital-inteligente/' + path_arquivo)
+                os.rename(dirpath.replace("\\", "/") + "/" + name, 'home/suas/Arquivo-digital-inteligente/' + path_arquivo)
             except Exception as e:
                 print(f"Erro ao mover arquivo {name}: {e}")
                 continue
