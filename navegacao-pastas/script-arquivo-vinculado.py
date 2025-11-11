@@ -1,6 +1,6 @@
 import os
 import csv
-from tika import parser  # pip install tika
+# from tika import parser  # pip install tika
 import uuid
 import hashlib
 import shutil

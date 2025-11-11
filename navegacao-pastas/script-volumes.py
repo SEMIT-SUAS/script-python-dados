@@ -1,6 +1,6 @@
 import os
 import csv
-from tika import parser  # pip install tika
+# from tika import parser  # pip install tika
 
 ROOT = r"/home/docs-onedrive/ARQUIVO SEMAD"
 OUTPUT_SQL = "extracao-volumes.sql"
@@ -64,12 +64,12 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
                 origem = "Digitalizado"
 
                 try:
-                    parsed = parser.from_file(path)
-                    text = parsed.get("content") or ""
-                    snippet = text.strip().replace("\n", " ")[:1000]
+                    # parsed = parser.from_file(path)
+                    # text = parsed.get("content") or ""
+                    # snippet = text.strip().replace("\n", " ")[:1000]
                     # Escape aspas simples para PostgreSQL
                     titulo_escaped = titulo.replace("'", "''")
-                    snippet_escaped = snippet.replace("'", "''")
+                    # snippet_escaped = snippet.replace("'", "''")
                     origem_escaped = origem.replace("'", "''")
                     chave_lote_escaped = chave_lote.replace("'", "''")
                     
