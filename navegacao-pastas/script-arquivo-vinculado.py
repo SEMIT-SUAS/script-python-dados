@@ -24,7 +24,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
             chave_lote = "L" + str(sum)
             nome_arquivo = name
             meu_uuid = str(uuid.uuid4())
-            path_arquivo = "uploads/" + meu_uuid + "_" + name
+            path_arquivo = "/home/suas/Arquivo-digital-inteligente/uploads/" + meu_uuid + "_" + name
             path = os.path.join(dirpath, name)
             ext = os.path.splitext(name)[1].lower()
             tipo_mime = "application/pdf"  # Exemplo fixo, ajustar conforme necessário
