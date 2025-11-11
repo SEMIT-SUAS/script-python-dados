@@ -2,18 +2,23 @@ import os
 import csv
 from tika import parser  # pip install tika
 
-ROOT = r"C:\Users\marim\OneDrive\Imagens\Documentos\Arquivos Paulo\projetos\DADOS ONEDRIVE"
-OUTPUT_CSV = "extracao-volumes.csv"
+ROOT = r"C:\Users\USER\Documents\Projetos\SUAS\Modelo-ONEDRIVE"
+OUTPUT_SQL = "extracao-volumes.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
 
-with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-    writer = csv.writer(f)
-    writer.writerow(["titulo","data_documento","id_tipo_documental","id_estado_conservacao","id_secretaria","id_discos_servidores","id_pastas_digitais","ativo","opcao_ocr","origem"])# "text_snippet"])
+with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
+    f.write("-- INSERTS para tabela de volumes\n\n")
+    # writer = csv.writer(f)
+    # writer.writerow(["titulo","data_documento","id_tipo_documental","id_estado_conservacao","id_secretaria","id_discos_servidores","id_pastas_digitais","ativo","opcao_ocr","origem","chave_lote"])# "text_snippet"])
+
+    sum = 0
 
     for dirpath, dirnames, filenames in os.walk(ROOT):
         print(dirpath, dirnames, filenames)  # debug opcional
 
         for name in filenames:
+            sum+=1
+            chave_lote = "L" + str(sum)
             path = os.path.join(dirpath, name)
             ext = os.path.splitext(name)[1].lower()
 
@@ -62,8 +67,27 @@ with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
                     parsed = parser.from_file(path)
                     text = parsed.get("content") or ""
                     snippet = text.strip().replace("\n", " ")[:1000]
-                    writer.writerow([titulo,data_documento,id_tipo_documental,id_estado_conservacao,id_secretaria,id_discos_servidores,id_pastas_digitais,ativo,opcao_ocr,origem])# snippet])
+                    # Escape aspas simples para PostgreSQL
+                    titulo_escaped = titulo.replace("'", "''")
+                    snippet_escaped = snippet.replace("'", "''")
+                    origem_escaped = origem.replace("'", "''")
+                    chave_lote_escaped = chave_lote.replace("'", "''")
+                    
+                    insert_sql = f"""INSERT INTO volumes (titulo, data_documento, id_tipo_documental, id_estado_conservacao, id_secretaria, id_discos_servidores, id_pastas_digitais, ativo, opcao_ocr, origem, chave_lote) 
+                    VALUES ('{titulo_escaped}', '{data_documento}', {id_tipo_documental}, {id_estado_conservacao}, {id_secretaria}, {id_discos_servidores}, {id_pastas_digitais}, {ativo}, {opcao_ocr}, '{origem_escaped}', '{chave_lote_escaped}');\n"""
+                    
+                    f.write(insert_sql)
+                    
                 except Exception as e:
-                    writer.writerow([titulo,data_documento,id_tipo_documental,id_estado_conservacao,id_secretaria,id_discos_servidores,id_pastas_digitais,ativo,opcao_ocr,origem, f"ERROR: {e}"])
+                    # Em caso de erro, ainda gera o INSERT sem o snippet
+                    titulo_escaped = titulo.replace("'", "''")
+                    origem_escaped = origem.replace("'", "''")
+                    chave_lote_escaped = chave_lote.replace("'", "''")
+                    error_msg = f"ERROR: {str(e)}".replace("'", "''")
+                    
+                    insert_sql = f"""INSERT INTO sua_tabela (titulo, data_documento, id_tipo_documental, id_estado_conservacao, id_secretaria, id_discos_servidores, id_pastas_digitais, ativo, opcao_ocr, origem, chave_lote) 
+                    VALUES ('{titulo_escaped}', '{data_documento}', {id_tipo_documental}, {id_estado_conservacao}, {id_secretaria}, {id_discos_servidores}, {id_pastas_digitais}, {ativo}, {opcao_ocr}, '{origem_escaped}', '{chave_lote_escaped}');\n"""
+                    
+                    f.write(insert_sql)
 
-print("Pronto — resultados salvos em", OUTPUT_CSV)
+print("Pronto — resultados salvos em", OUTPUT_SQL)

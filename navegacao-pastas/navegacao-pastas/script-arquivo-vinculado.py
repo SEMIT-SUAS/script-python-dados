@@ -3,19 +3,25 @@ import csv
 from tika import parser  # pip install tika
 import uuid
 import hashlib
+import shutil
 
-ROOT = r"C:\Users\marim\OneDrive\Imagens\Documentos\Arquivos Paulo\projetos\DADOS ONEDRIVE"
-OUTPUT_CSV = "extracao-arquivo.csv"
+ROOT = r"/home/docs-onedrive/ARQUIVO SEMAD"
+OUTPUT_SQL = "extracao-arquivo.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
 
-with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-    writer = csv.writer(f)
-    writer.writerow(["nome_arquivo","path_arquivo","tipo_mime","tamanho_bytes","hash_md5","ocr_status","conteudo_ocr"])
+with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
+    f.write("-- INSERTS para tabela de arquivos\n\n")
+    # writer = csv.writer(f)
+    # writer.writerow(["nome_arquivo","path_arquivo","tipo_mime","tamanho_bytes","hash_md5","ocr_status","conteudo_ocr","chave_lote"])
+
+    sum = 0
 
     for dirpath, dirnames, filenames in os.walk(ROOT):
         print(dirpath, dirnames, filenames)  # debug opcional
 
         for name in filenames:
+            sum+=1
+            chave_lote = "L" + str(sum)
             nome_arquivo = name
             meu_uuid = str(uuid.uuid4())
             path_arquivo = "uploads/" + meu_uuid + "_" + name
@@ -60,11 +66,38 @@ with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
                     #ORIGEM
 
             try:
-                # parsed = parser.from_file(path)
-                # text = parsed.get("content") or ""
-                # snippet = text.strip().replace("\n", " ")[:1000]
-                writer.writerow([nome_arquivo,path_arquivo,tipo_mime,tamanho_bytes,hash_md5,ocr_status,conteudo_ocr])
+                os.rename('/home/docs-onedrive/ARQUIVO SEMAD/DOSSIÊS/A/' + name, '/home/suas/Arquivo-digital-inteligente/' + path_arquivo)
             except Exception as e:
-                writer.writerow([nome_arquivo,path_arquivo,tipo_mime,tamanho_bytes,hash_md5,ocr_status,conteudo_ocr, f"ERROR: {e}"])
+                print(f"Erro ao mover arquivo {name}: {e}")
+                continue
+            try:
+                # Escape de aspas simples para PostgreSQL
+                nome_arquivo_escaped = nome_arquivo.replace("'", "''")
+                path_arquivo_escaped = path_arquivo.replace("'", "''")
+                tipo_mime_escaped = tipo_mime.replace("'", "''")
+                hash_md5_escaped = hash_md5.replace("'", "''")
+                ocr_status_escaped = ocr_status.replace("'", "''")
+                conteudo_ocr_escaped = conteudo_ocr.replace("'", "''")
+                chave_lote_escaped = chave_lote.replace("'", "''")
+                
+                insert_sql = f"""INSERT INTO arquivos_digitais (nome_arquivo, path_arquivo, tipo_mime, tamanho_bytes, hash_md5, ocr_status, conteudo_ocr, chave_lote) 
+                VALUES ('{nome_arquivo_escaped}', '{path_arquivo_escaped}', '{tipo_mime_escaped}', {tamanho_bytes}, '{hash_md5_escaped}', '{ocr_status_escaped}', '{conteudo_ocr_escaped}', '{chave_lote_escaped}');\n"""
+                
+                f.write(insert_sql)
+                
+            except Exception as e:
+                # Em caso de erro, ainda gera o INSERT com informações básicas
+                nome_arquivo_escaped = nome_arquivo.replace("'", "''") if nome_arquivo else ''
+                path_arquivo_escaped = path_arquivo.replace("'", "''") if path_arquivo else ''
+                tipo_mime_escaped = tipo_mime.replace("'", "''") if tipo_mime else ''
+                hash_md5_escaped = hash_md5.replace("'", "''") if hash_md5 else ''
+                ocr_status_escaped = ocr_status.replace("'", "''") if ocr_status else ''
+                conteudo_ocr_escaped = f"ERROR: {str(e)}".replace("'", "''")
+                chave_lote_escaped = chave_lote.replace("'", "''") if chave_lote else ''
+                
+                insert_sql = f"""INSERT INTO arquivos_digitais (nome_arquivo, path_arquivo, tipo_mime, tamanho_bytes, hash_md5, ocr_status, conteudo_ocr, chave_lote) 
+                VALUES ('{nome_arquivo_escaped}', '{path_arquivo_escaped}', '{tipo_mime_escaped}', {tamanho_bytes}, '{hash_md5_escaped}', '{ocr_status_escaped}', '{conteudo_ocr_escaped}', '{chave_lote_escaped}');\n"""
+                
+                f.write(insert_sql)
 
-print("Pronto — resultados salvos em", OUTPUT_CSV)
+print("Pronto — resultados salvos em", OUTPUT_SQL)
