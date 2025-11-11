@@ -2,7 +2,7 @@ import os
 import csv
 from tika import parser  # pip install tika
 
-ROOT = r"C:\Users\USER\Documents\Projetos\SUAS\Modelo-ONEDRIVE"
+ROOT = r"/home/docs-onedrive/ARQUIVO SEMAD"
 OUTPUT_SQL = "extracao-volumes.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
 
