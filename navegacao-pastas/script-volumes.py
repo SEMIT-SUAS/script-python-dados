@@ -1,5 +1,5 @@
 import os
-import csv
+# import csv
 # from tika import parser  # pip install tika
 
 ROOT = r"/home/docs-onedrive/ARQUIVO SEMAD"
@@ -11,7 +11,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
     # writer = csv.writer(f)
     # writer.writerow(["titulo","data_documento","id_tipo_documental","id_estado_conservacao","id_secretaria","id_discos_servidores","id_pastas_digitais","ativo","opcao_ocr","origem","chave_lote"])# "text_snippet"])
 
-    sum = 0
+    sum = 283
 
     for dirpath, dirnames, filenames in os.walk(ROOT):
         print(dirpath, dirnames, filenames)  # debug opcional

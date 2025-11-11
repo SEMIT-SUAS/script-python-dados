@@ -14,7 +14,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
     # writer = csv.writer(f)
     # writer.writerow(["nome_arquivo","path_arquivo","tipo_mime","tamanho_bytes","hash_md5","ocr_status","conteudo_ocr","chave_lote"])
 
-    sum = 0
+    sum = 283
 
     for dirpath, dirnames, filenames in os.walk(ROOT):
         print(dirpath, dirnames, filenames)  # debug opcional
