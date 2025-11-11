@@ -17,9 +17,10 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
     sum = 283
 
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        print(dirpath, dirnames, filenames)  # debug opcional
+        # print(dirpath, dirnames, filenames)  # debug opcional
 
         for name in filenames:
+            # print(dirpath.replace("\\", "/") + "/")  # Mostra o caminho completo do arquivo
             sum+=1
             chave_lote = "L" + str(sum)
             nome_arquivo = name
@@ -66,7 +67,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
                     #ORIGEM
 
             try:
-                os.rename('/home/docs-onedrive/ARQUIVO SEMAD/DOSSIÊS/A/' + name, '/home/suas/Arquivo-digital-inteligente/' + path_arquivo)
+                os.rename(dirpath.replace("\\", "/") + "/" + name, '/home/suas/Arquivo-digital-inteligente/' + path_arquivo)
             except Exception as e:
                 print(f"Erro ao mover arquivo {name}: {e}")
                 continue
