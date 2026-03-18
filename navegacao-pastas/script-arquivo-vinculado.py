@@ -5,9 +5,18 @@ import uuid
 import hashlib
 import shutil
 
+def calcular_md5(caminho):
+    hash_md5 = hashlib.md5()
+    with open(caminho, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
 ROOT = r"/home/docs-onedrive/ARQUIVO SEMAD"
 OUTPUT_SQL = "extracao-arquivo.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
+
+os.makedirs("/home/suas/Arquivo-digital-inteligente/uploads/", exist_ok=True)
 
 with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
     f.write("-- INSERTS para tabela de arquivos\n\n")
@@ -30,8 +39,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
             ext = os.path.splitext(name)[1].lower()
             tipo_mime = "application/pdf"  # Exemplo fixo, ajustar conforme necessário
             tamanho_bytes = os.path.getsize(path)
-            nome_bytes = nome_arquivo.encode('utf-8')
-            hash_md5 = hashlib.md5(nome_bytes).hexdigest()
+            hash_md5 = calcular_md5(path)
             ocr_status = "false"
             conteudo_ocr = "OCR pendente para processamento posterior"
 
@@ -67,9 +75,9 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
                     #ORIGEM
 
             try:
-                os.rename(dirpath.replace("\\", "/") + "/" + name, path_arquivo)
+                shutil.copy2(path, path_arquivo)
             except Exception as e:
-                print(f"Erro ao mover arquivo {name}: {e}")
+                print(f"Erro ao copiar arquivo {name}: {e}")
                 continue
             try:
                 # Escape de aspas simples para PostgreSQL
