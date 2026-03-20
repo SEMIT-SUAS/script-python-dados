@@ -25,8 +25,15 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
 
     sum = 283
 
-    for dirpath, dirnames, filenames in os.walk(ROOT):
-        # print(dirpath, dirnames, filenames)  # debug opcional
+    for ano in os.listdir(ROOT):
+    caminho_ano = os.path.join(ROOT, ano)
+
+        # só entra se for pasta e for um ano (número)
+        if not os.path.isdir(caminho_ano) or not ano.isdigit():
+            continue
+
+        for dirpath, dirnames, filenames in os.walk(caminho_ano):
+            for name in filenames:
 
         for name in filenames:
             # print(dirpath.replace("\\", "/") + "/")  # Mostra o caminho completo do arquivo
