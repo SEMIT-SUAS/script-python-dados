@@ -12,11 +12,11 @@ def calcular_md5(caminho):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-ROOT = r"C:/Users/paulo/OneDrive/Documentos/SUAS/Projetos/Teste-script/caminho-origem"
+ROOT = r"/home/suas/Arquivos-SEMAD/Diario/arquivos_full"
 OUTPUT_SQL = "extracao-arquivo.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
 
-os.makedirs("C:/Users/paulo/OneDrive/Documentos/SUAS/Projetos/Teste-script/caminho-origem", exist_ok=True)
+os.makedirs("/home/suas/Arquivos-SEMAD/Diario/arquivos_full", exist_ok=True)
 
 with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
     f.write("-- INSERTS para tabela de arquivos\n\n")
@@ -41,7 +41,7 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
             chave_lote = "L" + str(sum)
             nome_arquivo = name
             meu_uuid = str(uuid.uuid4())
-            path_arquivo = r"C:/Users/paulo/OneDrive/Documentos/SUAS/Projetos/Teste-script/caminho-destino/" + meu_uuid + "_" + name
+            path_arquivo = r"/home/suas/Arquivo-digital-inteligente/uploads/" + meu_uuid + "_" + name
             path = os.path.join(dirpath, name)
             ext = os.path.splitext(name)[1].lower()
             tipo_mime = "application/pdf"  # Exemplo fixo, ajustar conforme necessário
