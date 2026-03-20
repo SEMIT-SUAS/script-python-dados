@@ -12,7 +12,7 @@ def calcular_md5(caminho):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-ROOT = r"C:/Users/paulo/OneDrive/Documentos/SUAS/Projetos/Teste-script\caminho-origem"
+ROOT = r"C:/Users/paulo/OneDrive/Documentos/SUAS/Projetos/Teste-script/caminho-origem"
 OUTPUT_SQL = "extracao-arquivo.sql"
 EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
 
