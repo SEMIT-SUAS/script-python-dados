@@ -2,7 +2,7 @@ import os
 import re
 from PyPDF2 import PdfReader
 
-ROOT = r"C:/Users/Administrador/Documents/Paulo/Arquivos-SEMAD/Diario/arquivos_full"
+ROOT = r"/home/suas/Arquivos-SEMAD/Diario/arquivos_full"
 OUTPUT_SQL = "extracao-volumes.sql"
 EXT_WHITE = {".pdf"}
 
