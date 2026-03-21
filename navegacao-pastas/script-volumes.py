@@ -44,33 +44,39 @@ def extrair_numero_edicao(nome):
 def extrair_data_pdf(caminho_pdf):
     try:
         reader = PdfReader(caminho_pdf)
-        texto = ""
-        for page in reader.pages:
-            texto += page.extract_text() or ""
 
-        # Regex para datas numéricas ou por extenso
+        if len(reader.pages) == 0:
+            return None
+
+        # 🔥 PEGA SÓ A PRIMEIRA PÁGINA
+        texto = reader.pages[0].extract_text() or ""
+
+        if not texto.strip():
+            return None
+
         patterns = [
-            r'(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})',                  # dd/mm/yyyy ou dd-mm-yyyy
-            r'(\d{1,2}) de (\w+) de (\d{4})'                          # 10 de março de 2023
+            r'(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})',
+            r'(\d{1,2}) de (\w+) de (\d{4})'
         ]
 
         meses = {
-            'janeiro':'01','fevereiro':'02','março':'03','marco':'03','abril':'04','maio':'05','junho':'06',
-            'julho':'07','agosto':'08','setembro':'09','outubro':'10','novembro':'11','dezembro':'12'
+            'janeiro':'01','fevereiro':'02','março':'03','marco':'03','abril':'04',
+            'maio':'05','junho':'06','julho':'07','agosto':'08',
+            'setembro':'09','outubro':'10','novembro':'11','dezembro':'12'
         }
 
         for pattern in patterns:
             match = re.search(pattern, texto, re.IGNORECASE)
             if match:
-                if len(match.groups()) == 3:
-                    d, m, a = match.groups()
-                    if m.isalpha():
-                        m = meses.get(m.lower(), '01')
-                    dia = d.zfill(2)
-                    mes = m.zfill(2)
-                    return f"{a}-{mes}-{dia}"
+                d, m, a = match.groups()
+
+                if m.isalpha():
+                    m = meses.get(m.lower(), '01')
+
+                return f"{a}-{m.zfill(2)}-{d.zfill(2)}"
 
         return None
+
     except Exception as e:
         print(f"Erro lendo PDF {caminho_pdf}: {e}")
         return None
