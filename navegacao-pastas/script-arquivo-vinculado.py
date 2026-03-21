@@ -36,6 +36,11 @@ with open(OUTPUT_SQL, "w", newline="", encoding="utf-8") as f:
             filenames.sort()    # 🔥 ordena arquivos
 
             for name in filenames:
+                ext = os.path.splitext(name)[1].lower()
+
+                if ext not in EXT_WHITE:
+                    continue  # 🔥 IGNORA NÃO PDF
+
                 contador += 1
                 chave_lote = "L" + str(contador)
 
