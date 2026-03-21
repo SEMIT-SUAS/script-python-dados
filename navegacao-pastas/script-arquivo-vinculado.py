@@ -14,7 +14,7 @@ def calcular_md5(caminho):
 
 ROOT = r"/home/suas/Arquivos-SEMAD/Diario/arquivos_full"
 OUTPUT_SQL = "extracao-arquivo.sql"
-EXT_WHITE = {".pdf", ".docx", ".txt", ".html", ".md"}
+EXT_WHITE = {".pdf"}
 
 os.makedirs("/home/suas/Arquivos-SEMAD/Diario/arquivos_full", exist_ok=True)
 
