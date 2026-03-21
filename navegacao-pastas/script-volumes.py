@@ -1,6 +1,7 @@
 import os
 import re
 from PyPDF2 import PdfReader
+from datetime import datetime
 
 ROOT = r"/home/suas/Arquivos-SEMAD/Diario/arquivos_full"
 OUTPUT_SQL = "extracao-volumes.sql"
@@ -46,7 +47,6 @@ def extrair_data_pdf(caminho_pdf):
         if len(reader.pages) == 0:
             return None
 
-        # 🔥 PEGA SÓ A PRIMEIRA PÁGINA
         texto = reader.pages[0].extract_text() or ""
 
         if not texto.strip():
@@ -68,10 +68,29 @@ def extrair_data_pdf(caminho_pdf):
             if match:
                 d, m, a = match.groups()
 
+                # converte mês por extenso
                 if m.isalpha():
                     m = meses.get(m.lower(), '01')
 
-                return f"{a}-{m.zfill(2)}-{d.zfill(2)}"
+                dia = int(d)
+                mes = int(m)
+                ano = int(a)
+
+                # 🔥 valida mês
+                if mes < 1 or mes > 12:
+                    mes = 1
+
+                # 🔥 valida dia (simples)
+                if dia < 1 or dia > 31:
+                    dia = 1
+
+                # 🔥 valida final com datetime (ex: fevereiro)
+                try:
+                    data_valida = datetime(ano, mes, dia)
+                except ValueError:
+                    dia = 1  # corrige dia inválido tipo 31/02
+
+                return f"{ano}-{str(mes).zfill(2)}-{str(dia).zfill(2)}"
 
         return None
 
