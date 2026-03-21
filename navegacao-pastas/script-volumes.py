@@ -89,37 +89,38 @@ with open(OUTPUT_SQL, "w", encoding="utf-8") as f:
         if not os.path.isdir(caminho_ano) or not ano.isdigit():
             continue
 
-    for name in sorted(os.listdir(caminho_ano)):  # ordena arquivos também
-        ext = os.path.splitext(name)[1].lower()
+        # ✅ AGORA ESTÁ DENTRO
+        for name in sorted(os.listdir(caminho_ano)):
+            ext = os.path.splitext(name)[1].lower()
 
-        if ext in EXT_WHITE:
-            contador += 1
-            chave_lote = f"L{contador}"
+            if ext in EXT_WHITE:
+                contador += 1
+                chave_lote = f"L{contador}"
 
-            numero = extrair_numero_edicao(name)
-            caminho_arquivo = os.path.join(caminho_ano, name)
+                numero = extrair_numero_edicao(name)
+                caminho_arquivo = os.path.join(caminho_ano, name)
 
-            data_extraida = extrair_data_pdf(caminho_arquivo)
-            data_documento = data_extraida if data_extraida else f"{ano}-01-01"
+                data_extraida = extrair_data_pdf(caminho_arquivo)
+                data_documento = data_extraida if data_extraida else f"{ano}-01-01"
 
-            titulo = f"DIARIO OFICIAL nº {numero} ANO {ano}"
+                titulo = f"DIARIO OFICIAL nº {numero} ANO {ano}"
 
-            # IDs padrão
-            id_tipo_documental = 7
-            id_estado_conservacao = 6
-            id_secretaria = 1
-            id_discos_servidores = 23
-            id_pastas_digitais = 13
-            ativo = True
-            opcao_ocr = False
-            origem = "Digitalizado"
+                # IDs padrão
+                id_tipo_documental = 7
+                id_estado_conservacao = 6
+                id_secretaria = 1
+                id_discos_servidores = 23
+                id_pastas_digitais = 13
+                ativo = True
+                opcao_ocr = False
+                origem = "Digitalizado"
 
-            titulo_escaped = titulo.replace("'", "''")
+                titulo_escaped = titulo.replace("'", "''")
 
-            insert_sql = f"""INSERT INTO volumes 
-(titulo, data_documento, id_tipo_documental, id_estado_conservacao, id_secretaria, id_discos_servidores, id_pastas_digitais, ativo, opcao_ocr, origem, chave_lote)
-VALUES ('{titulo_escaped}', '{data_documento}', {id_tipo_documental}, {id_estado_conservacao}, {id_secretaria}, {id_discos_servidores}, {id_pastas_digitais}, {str(ativo).lower()}, {str(opcao_ocr).lower()}, '{origem}', '{chave_lote}');\n"""
+                insert_sql = f"""INSERT INTO volumes 
+    (titulo, data_documento, id_tipo_documental, id_estado_conservacao, id_secretaria, id_discos_servidores, id_pastas_digitais, ativo, opcao_ocr, origem, chave_lote)
+    VALUES ('{titulo_escaped}', '{data_documento}', {id_tipo_documental}, {id_estado_conservacao}, {id_secretaria}, {id_discos_servidores}, {id_pastas_digitais}, {str(ativo).lower()}, {str(opcao_ocr).lower()}, '{origem}', '{chave_lote}');\n"""
 
-            f.write(insert_sql)
+                f.write(insert_sql)
 
 print("Pronto — resultados salvos em", OUTPUT_SQL)
