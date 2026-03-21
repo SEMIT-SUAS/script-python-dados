@@ -26,19 +26,17 @@ def romano_para_int(romano):
 def extrair_numero_edicao(nome):
     nome_lower = nome.lower()
 
-    patterns = [
-        r'edica[oõ]?-?\s*(\d+)',  # edicao-123 ou edicao 123
-        r'n[ºo]\s*(\d+)',         # n° 123 ou no 123
-        r'numero\s*(\d+)',        # numero 123
-        r'(\d+)'                   # último recurso: qualquer número
-    ]
+    # 🔥 padrão específico do seu arquivo
+    match = re.search(r'dom-\d{4}-(\d+)', nome_lower)
+    if match:
+        return match.group(1).zfill(3)
 
-    for pattern in patterns:
-        match = re.search(pattern, nome_lower)
-        if match:
-            return match.group(1)
+    # fallback (caso não siga padrão)
+    match = re.search(r'(\d+)', nome_lower)
+    if match:
+        return match.group(1)
 
-    return "0"
+    return "000"
 
 # Função para extrair data de dentro do PDF
 def extrair_data_pdf(caminho_pdf):
@@ -85,41 +83,43 @@ def extrair_data_pdf(caminho_pdf):
 with open(OUTPUT_SQL, "w", encoding="utf-8") as f:
     f.write("-- INSERTS para tabela de volumes\n\n")
 
-    for dirpath, dirnames, filenames in os.walk(ROOT):
-        ano_pasta = os.path.basename(dirpath)
-        if not ano_pasta.isdigit():
-            continue  # pula pastas que não são anos
+    for ano in sorted(os.listdir(ROOT)):
+        caminho_ano = os.path.join(ROOT, ano)
 
-        for name in filenames:
-            ext = os.path.splitext(name)[1].lower()
-            if ext in EXT_WHITE:
-                contador += 1
-                chave_lote = f"L{contador}"
+        if not os.path.isdir(caminho_ano) or not ano.isdigit():
+            continue
 
-                numero = extrair_numero_edicao(name)
-                caminho_arquivo = os.path.join(dirpath, name)
+    for name in sorted(os.listdir(caminho_ano)):  # ordena arquivos também
+        ext = os.path.splitext(name)[1].lower()
 
-                data_extraida = extrair_data_pdf(caminho_arquivo)
-                data_documento = data_extraida if data_extraida else f"{ano_pasta}-01-01"
+        if ext in EXT_WHITE:
+            contador += 1
+            chave_lote = f"L{contador}"
 
-                titulo = f"DIARIO OFICIAL nº {numero} ANO {ano_pasta}"
+            numero = extrair_numero_edicao(name)
+            caminho_arquivo = os.path.join(caminho_ano, name)
 
-                # IDs padrão conforme solicitado
-                id_tipo_documental = 7
-                id_estado_conservacao = 6
-                id_secretaria = 1
-                id_discos_servidores = 23
-                id_pastas_digitais = 13
-                ativo = True
-                opcao_ocr = False
-                origem = "Digitalizado"
+            data_extraida = extrair_data_pdf(caminho_arquivo)
+            data_documento = data_extraida if data_extraida else f"{ano}-01-01"
 
-                titulo_escaped = titulo.replace("'", "''")
+            titulo = f"DIARIO OFICIAL nº {numero} ANO {ano}"
 
-                insert_sql = f"""INSERT INTO volumes 
+            # IDs padrão
+            id_tipo_documental = 7
+            id_estado_conservacao = 6
+            id_secretaria = 1
+            id_discos_servidores = 23
+            id_pastas_digitais = 13
+            ativo = True
+            opcao_ocr = False
+            origem = "Digitalizado"
+
+            titulo_escaped = titulo.replace("'", "''")
+
+            insert_sql = f"""INSERT INTO volumes 
 (titulo, data_documento, id_tipo_documental, id_estado_conservacao, id_secretaria, id_discos_servidores, id_pastas_digitais, ativo, opcao_ocr, origem, chave_lote)
 VALUES ('{titulo_escaped}', '{data_documento}', {id_tipo_documental}, {id_estado_conservacao}, {id_secretaria}, {id_discos_servidores}, {id_pastas_digitais}, {str(ativo).lower()}, {str(opcao_ocr).lower()}, '{origem}', '{chave_lote}');\n"""
 
-                f.write(insert_sql)
+            f.write(insert_sql)
 
 print("Pronto — resultados salvos em", OUTPUT_SQL)
