@@ -1,0 +1,168 @@
+SMART REFERENTIAL SAMPLER: PRODUCAO -> DOCKER
+============================================================
+
+[*] Auditando produção para encontrar IDs vitais...
+
+[*] Resultados da Auditoria (High-Fidelity):
+  - IDs Processos/Diários: [1, 7]
+  - IDs Discos: [23]
+  - IDs Pastas: [13]
+  - IDs Estados: [6]
+
+[*] Garantindo IDs vitais da Produção (Alta Fidelidade)...
+└─ estados_conservacao: +1 registro(s)
+└─ discos_servidores: +1 registro(s)
+└─ pastas_digitais: +1 registro(s)
+└─ tipos_documentais: +2 registro(s)
+
+[*] Iniciando amostragem genérica complementar...
+  └─ secretarias: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+            └─ volumes: +1 registro(s)
+          └─ arquivos_digitais: +1 registro(s)
+        └─ volumes: +1 registro(s)
+      └─ arquivos_digitais: +1 registro(s)
+    └─ volumes: +1 registro(s)
+  └─ arquivos_digitais: +1 registro(s)
+└─ volumes: +20 registro(s)
+  └─ lotacao_atual: +1 registro(s)
+  └─ secretarias: +1 registro(s)
+    └─ secretarias: +1 registro(s)
+  └─ lotacao_atual: +1 registro(s)
+    └─ secretarias: +1 registro(s)
+  └─ lotacao_atual: +1 registro(s)
+└─ servidores: +14 registro(s)
+  └─ setores: +1 registro(s)
+  └─ setores: +1 registro(s)
+└─ usuarios: +3 registro(s)
+
+[*] Finalizando integridade...
+
+============================================================
+AMOSTRAGEM CONCLUÍDA COM SUCESSO!
+------------------------------------------------------------
+  - arquivos_digitais         : 20 registros
+  - discos_servidores         : 1 registros
+  - estados_conservacao       : 1 registros
+  - lotacao_atual             : 3 registros
+  - pastas_digitais           : 1 registros
+  - secretarias               : 4 registros
+  - servidores                : 14 registros
+  - setores                   : 2 registros
+  - tipos_documentais         : 2 registros
+  - usuarios                  : 3 registros
+  - volumes                   : 20 registros
+============================================================
