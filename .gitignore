@@ -205,3 +205,12 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ADI Arquivos de teste
+test/assets/drive_d/**
+!test/assets/drive_d/
+!test/assets/drive_d/.gitkeep
+test/assets/uploads/**
+!test/assets/uploads/
+!test/assets/uploads/.gitkeep
+test/pgdata/
