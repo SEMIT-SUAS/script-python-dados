@@ -40,10 +40,11 @@ ORIGEM_CARGA = "Digitalizado"
 OPCAO_OCR_PADRAO = "false"
 
 # ==============================================================================
-# REGEX v3.0: Ultra Flexível (Captura Nº, PROCESSO, espaços variados)
+# REGEX v4.0: Ultra Flexível (Captura Nº, PROCESSO, espaços variados)
+# Torna o prefixo 06.00 OPCIONAL
 # ==============================================================================
 PADRAO_NOME = re.compile(
-    r"06[\.\s]*00\s*-?\s*(.*?)\s*(?:N[ºº]|N\.?\s*E\.?|NE|PROCESSO DE .*? Nº|PROCESSO Nº|PROC[A-Z\.]*|PORCESSO)\s*(.*?)\.pdf",
+    r"(?:06[\.\s]*00\s*-?\s*)?(.*?)\s*(?:N[ºº]|N\.?\s*E\.?|NE|PROCESSO DE .*? Nº|PROCESSO Nº|PROC[A-Z\.]*|PORCESSO)\s*(.*?)\.pdf",
     re.IGNORECASE
 )
 
@@ -169,14 +170,22 @@ def processar_lote():
             else:
                 id_tipo = ID_TIPO_PROCESSO
                 match = PADRAO_NOME.search(nome_original)
-                if not match:
-                    ignorados.append(f"PADRAO INVALIDO | {pasta_pai} | {nome_original}")
-                    continue
                 
-                categoria_ext, ne_val = match.groups()
-                ne_numero = ne_val.strip() if ne_val else "N/A"
-                titulo_limpo = categoria_ext.strip().replace("  ", " ")
-                titulo = f"[{pasta_pai}] {titulo_limpo} - {ne_numero}"
+                if match:
+                    categoria_ext, ne_val = match.groups()
+                    ne_numero = ne_val.strip() if ne_val else "N/A"
+                    # Limpa a categoria e remove hifens sobressalentes
+                    titulo_limpo = categoria_ext.strip().strip("-").strip().replace("  ", " ")
+                    if titulo_limpo:
+                        titulo = f"[{pasta_pai}] {titulo_limpo} - {ne_numero}"
+                    else:
+                        titulo = f"[{pasta_pai}] Processo - {ne_numero}"
+                else:
+                    # FALLBACK: Se não tem o padrão NE/PROC, usa o nome do arquivo direto
+                    # Isso garante 100% de captura
+                    titulo_bruto = nome_original.replace(".pdf", "").replace(".PDF", "")
+                    titulo = f"[{pasta_pai}] {titulo_bruto}"
+                    ne_numero = "N/A"
 
             # 🛠️ PROCESSAMENTO
             meu_uuid = str(uuid.uuid4())

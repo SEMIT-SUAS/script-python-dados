@@ -269,10 +269,10 @@ def clonar_inteligente():
             if ids_semente:
                 upsert_registros(cur_origem, cur_destino, sem, ids_semente, fks, cache_local)
 
-        # Sincronização final de sequences
-        log("\n[*] Finalizando integridade...")
-        for tab in cache_local.keys():
-            sincronizar_sequences(cur_origem, cur_destino, tab)
+        # Sincronização final de sequences (DESATIVADO para manter sequência local 1, 2, 3...)
+        # log("\n[*] Finalizando integridade...")
+        # for tab in cache_local.keys():
+        #     sincronizar_sequences(cur_origem, cur_destino, tab)
 
         cur_destino.execute("SET session_replication_role = 'origin';")
         conn_destino.commit()

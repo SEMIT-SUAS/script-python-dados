@@ -147,9 +147,7 @@ SMART REFERENTIAL SAMPLER: PRODUCAO -> DOCKER
 └─ servidores: +14 registro(s)
   └─ setores: +1 registro(s)
   └─ setores: +1 registro(s)
-└─ usuarios: +3 registro(s)
-
-[*] Finalizando integridade...
+└─ usuarios: +4 registro(s)
 
 ============================================================
 AMOSTRAGEM CONCLUÍDA COM SUCESSO!
@@ -163,6 +161,6 @@ AMOSTRAGEM CONCLUÍDA COM SUCESSO!
   - servidores                : 14 registros
   - setores                   : 2 registros
   - tipos_documentais         : 2 registros
-  - usuarios                  : 3 registros
+  - usuarios                  : 4 registros
   - volumes                   : 20 registros
 ============================================================
